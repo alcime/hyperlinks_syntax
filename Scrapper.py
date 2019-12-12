@@ -1,4 +1,4 @@
-""" Scrape les hyperliens d'une page html du Washington Post et les range dans un csv"""
+""" Scrape les hyperliens d'une page html du New York Times et les range dans un csv"""
 
 
 # Libraries
@@ -8,7 +8,7 @@ import re
 from argparse import ArgumentParser
 
 # Variables
-tag_class = "a class=\"css-1g7m0tk\" href="
+tag_class_hyperlinks = 'a class="css-1g7m0tk" href'
 which_parser = "lxml"
 print_in_console = True
 output_file_relative_pathname = 'scrapped_url.tsv'
@@ -22,9 +22,9 @@ output_file_relative_pathname = 'scrapped_url.tsv'
 
 #args = t_parser.parse_args()
 
-input_file_name = args.filename
-which_parser = args.parser_type
-print_in_console = args.verbose
+#input_file_name = args.filename
+#which_parser = args.parser_type
+#xprint_in_console = args.verbose
 
 
 # Functions
@@ -45,13 +45,14 @@ if input_file_name == '':
 
 # Open a tsv to write the data in it
 output_file = open(output_file_relative_pathname, "w+")
+output_file.write('url' + '\t' + 'hyperlinked text' + '\n')
 
-   
 # Open html and print it in terminal
 with open(input_file_name, 'r') as html_file :
     html_file_contents = html_file.read()
     file_soup = BeautifulSoup(html_file_contents, features=which_parser)
     pretty_soup = file_soup.prettify()
+    pretty_soup = pretty_soup.replace('title=""','')
     if print_in_console:
        print (pretty_soup)
 
@@ -61,13 +62,13 @@ with open(input_file_name, 'r') as html_file :
 
 while True: 
    # Extract the url
-   i_where_link_starts = pretty_soup.find(tag_class)
-
+   i_where_link_starts = pretty_soup.find(tag_class_hyperlinks)
+   
    if i_where_link_starts == -1:
       print('No more links')
       break
 
-   i_start_quote = pretty_soup.find('"', i_where_link_starts)
+   i_start_quote = pretty_soup.find('"', i_where_link_starts + len(tag_class_hyperlinks) )
    i_end_quote = pretty_soup.find('"', i_start_quote + 1)
    url = pretty_soup[i_start_quote + 1: i_end_quote]
 
