@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('tagsets')
-print_in_console = True
 
 input_file_name = input("Name of the entry file :")
 print ('\n')
@@ -46,7 +45,15 @@ with open(input_file_name) :
         categories[tag_of_tuple] += 1
     print(categories)
     
-#show the result in a pie chart using matplotlib
+# remove from dictionnary all categories which are not instantiated in the hyperlinks 
+    categories = {x:y for x,y in categories.items() if y!=0}
+        
+# create a pie chart showing the distribution of syntactic categories using matplotlib
+    keys = categories.keys()
+    values = categories.values()
+    plt.pie(values, labels=keys, autopct='%1.1f%%')
+    plt.title("Syntactic Categories")
+    plt.show()
     
         
         
