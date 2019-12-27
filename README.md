@@ -31,7 +31,7 @@ Dans un deuxième temps, le programme produit un graph à l'aide de la librairie
 
 Contexte: 
 
-J'étais complétement débutante n'ayant jamais programmé avant, ne connaissant même pas la fonction du terminal. J'ai commencé donc Python avec ce cours, j'ai appris comment utilisé le terminal et j'ai programmé cet analyzer utilisant Spyder dans Anaconda Navigator. 
+J'étais complétement débutante n'ayant jamais programmé avant, ne connaissant même pas le fonctionnement du terminal. J'ai commencé donc Python avec ce cours, j'ai appris comment utilisé le terminal et j'ai programmé cet analyzer utilisant Spyder dans Anaconda Navigator. 
 
-J'ai fait de mon mieux pour que le programme soit lisible et simple, utilisant uni NLTK, pandas et matplotlib. J'ai utilisé plusiers fois Stack Overflow quand j'avais des questions, surtout pour la syntaxe de Python et pour comprendre ce que font certaines fonctions de NLTK et de pandas. En plus, j'ai discuté avec Louis-Marie quand j'avais des doutes et/ou des problèmes quand à la conception de l'algorithme. J'ai trouvé cet échange très utile et j'ai beaucoup aimé faire ce projet en groupe. 
+J'ai fait de mon mieux pour que le programme soit lisible et simple, utilisant uniquement NLTK, pandas et matplotlib. J'ai utilisé plusiers fois Stack Overflow quand j'avais des questions, surtout pour la syntaxe de Python et pour comprendre ce que font certaines fonctions de NLTK et de pandas. En plus, j'ai discuté avec Louis-Marie quand j'avais des doutes et/ou des problèmes quant à la conception de l'algorithme. J'ai trouvé cet échange très utile et j'ai beaucoup aimé faire ce projet en groupe. 
 
