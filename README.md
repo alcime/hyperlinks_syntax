@@ -3,7 +3,7 @@ Projet d'analyse quantitative de la syntaxe des hyperliens. Le but est de recupe
 
 Ce projet se compose de deux programmes: un scraper et un analyzer.
 
-Louis-Marie:
+# Louis-Marie:
 
 Je me suis chargé de la partie scraper.
 
@@ -19,7 +19,7 @@ Je n'avais jamais programme avant, même si j'avais appris à utiliser le termin
 J'ai essayé d'integrer autant de notions que possibles (définition de fonction, Regex, ... ) dans mon programme, et surtout de le construire sans utiliser un parser (la library BeautifulSoup n'est utilisée que pour du formatage). Ceci a engendré plusieurs limitations : tout d'abord, le scraper est construit spécialement pour des pages du New York Times (même si la variable tag_class peut-être changée en fonction des balises utilisées par le site). De plus, il m'a fallu reconstruire certaines fonctions d'un parseur à la main, par exemple pour le formatage du texte que l'on scrape.
 
 
-Anastasia:
+# Anastasia:
 
 Moi je me suis chargée de la partie analyzer.
 
