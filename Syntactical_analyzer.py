@@ -6,6 +6,7 @@ import nltk # we use the library NLTK to associate the hyperlink text with certa
 import matplotlib.pyplot as plt
 
 
+# download required packages from NLTK
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('tagsets')
@@ -54,14 +55,14 @@ with open(input_file_name) :
     
       
 # remove from dictionnary all categories which are not instantiated in the hyperlinks 
-    categories = {x:y for x,y in categories.items() if y!=0}
+    non_null_categories = {x:y for x,y in categories.items() if y!=0}
    
         
 # create a pie chart showing the distribution of syntactic categories using matplotlib
-    keys = categories.keys()
-    values = categories.values()
-    plt.pie(values, labels=keys, autopct='%1.1f%%')
-    plt.title("Syntactic Categories")
+    syntactic_category = non_null_categories.keys()
+    frequence_of_syntactic_category = non_null_categories.values()
+    plt.pie(frequence_of_syntactic_category, labels=syntactic_category, autopct='%1.1f%%')
+    plt.title("Distribution of syntactic categories in hyperlinks")
     plt.show()
     
         

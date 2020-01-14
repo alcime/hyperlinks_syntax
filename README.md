@@ -23,15 +23,15 @@ J'ai essayé d'integrer autant de notions que possibles (définition de fonction
 
 Moi je me suis chargée de la partie analyzer.
 
-L'analyzer, a partir du fichier TSV que le scraper a produit associe le text hyperlinké à sa catégorie syntaxique. Ensuite, il produit un graph qui montre la distribution des catégories syntaxiques dans le texte hyperlinké. 
+L'analyzer, a partir du fichier TSV que le scraper a produit associe le text hyperlinké à sa catégorie syntaxique. Ensuite, il produit un graphe qui montre la distribution des catégories syntaxiques dans le texte hyperlinké. 
 
 Ceci est fait à l'aide de la librairie NLTK. Par conséquent, les catégories syntaxiques utilisées sont celles de NLTK et le programme marche pour un texte en anglais. Le fichier TSV est d'abord transformé en Panda DataFrame et ensuite le programme associe à l'aide du NLTK POS Tagger le mot hyperlinké avec sa catégorie syntaxique. 
 
-Dans un deuxième temps, le programme produit un graph à l'aide de la librairie matplotlib. Ainsi, il montre dans un diagramme circulaire le pourcentage de chaque catégorie utilisée.
+Dans un deuxième temps, le programme produit un graphe à l'aide de la librairie matplotlib. Ainsi, il montre dans un diagramme circulaire le pourcentage de chaque catégorie utilisée.
 
 Contexte: 
 
-J'étais complétement débutante n'ayant jamais programmé avant, ne connaissant même pas le fonctionnement du terminal. J'ai commencé donc Python avec ce cours, j'ai appris comment utilisé le terminal et j'ai programmé cet analyzer utilisant Spyder dans Anaconda Navigator. 
+J'étais complétement débutante n'ayant jamais programmé avant, ne connaissant même pas le fonctionnement du terminal. J'ai commencé donc Python avec ce cours, j'ai appris comment utiliser le terminal et j'ai programmé cet analyzer utilisant Spyder dans Anaconda Navigator. 
 
 J'ai fait de mon mieux pour que le programme soit lisible et simple, utilisant uniquement NLTK, pandas et matplotlib. J'ai utilisé plusiers fois Stack Overflow quand j'avais des questions, surtout pour la syntaxe de Python et pour comprendre ce que font certaines fonctions de NLTK et de pandas. En plus, j'ai discuté avec Louis-Marie quand j'avais des doutes et/ou des problèmes quant à la conception de l'algorithme. J'ai trouvé cet échange très utile et j'ai beaucoup aimé faire ce projet en groupe. 
 
