@@ -29,7 +29,7 @@ output_file_relative_pathname = 'scrapped_url.tsv'
 
 # Functions
 def format_string (string):
-   """ Delete in a string : newlines, tabulations and leading space"""
+   """ Delete newlines, tabulations and leading space in a string"""
    string_formatted = string.replace('\n', '')
    string_formatted = string_formatted.replace('\t', '')
    string_formatted = re.sub(r"^\s+", "", string_formatted) # Remove leading spaces
@@ -47,7 +47,7 @@ if input_file_name == '':
 output_file = open(output_file_relative_pathname, "w+")
 output_file.write('url' + '\t' + 'hyperlinked text' + '\n')
 
-# Open html and print it in terminal
+# Open html and print it in prompt
 with open(input_file_name, 'r') as html_file :
     html_file_contents = html_file.read()
     file_soup = BeautifulSoup(html_file_contents, features=which_parser)
@@ -56,7 +56,6 @@ with open(input_file_name, 'r') as html_file :
     if print_in_console:
        print (pretty_soup)
 
-#
 
 # Loop over the html page to find hyperlinked text and associated url
 
@@ -82,7 +81,7 @@ while True:
    i_end_hyperlinked = pretty_soup.find('</a>', i_start_hyperlinked + 1)
    hyperlinked = pretty_soup[i_start_hyperlinked + 1 : i_end_hyperlinked]
 
-   # Format the url and the hyperlinked
+   # Format the url and the hyperlinked text
    url_formatted = format_string(url)
    hyperlinked_formatted = format_string(hyperlinked)
    
@@ -91,7 +90,7 @@ while True:
 
    
 
-   # Check approximately if the url is not part of a script (this is because when embedded in javascript code, double slash will be coded as '/\/\' in the html code source
+   # Delete false positives by checking approximately if the url is not part of a script (this is because when embedded in javascript code, double slash will be coded as '/\/\' in the html code source)
    if url.find('\/\/') == -1 :
       
       # Write the data in tsv
