@@ -4,6 +4,7 @@
 import pandas as pd
 import nltk # we use the library NLTK to associate the hyperlink text with certain syntactic categories
 import matplotlib.pyplot as plt
+import re
 
 
 # download required packages from NLTK
@@ -40,6 +41,7 @@ with open(input_file_name) :
 # For every element of the column 'hyperlink_text' look inside it and tokenise its content 
     for line in hyperlink_text:
         print(line)
+        line = re.sub(r'[^a-zA-Z0-9_\s]+', '', line) # we remove any special characters, while leaving numbers since NLTK has the special category 'CD' for numerals
         text_token = nltk.word_tokenize(line)
         print("the words in the hyperlink are" + str(text_token))
         print('\n')
