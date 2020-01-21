@@ -5,26 +5,26 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import re
-from argparse import ArgumentParser
-
-# Variables
-tag_class_hyperlinks = 'a class="css-1g7m0tk" href'
-which_parser = "lxml"
-print_in_console = True
-output_file_relative_pathname = 'scrapped_url.tsv'
+import argparse
 
 # Create a parser for the terminal
-#t_parser = ArgumentParser()
+t_parser = argparse.ArgumentParser(description = 'Parse an html file for hyperlinks and returns a tsv file.', epilog='Hope it helped !')
 
-#t_parser.add_argument("-f", "--file", dest="filename", help="Relative path of the html file you want to scrape ", default = 'html_simple.html')
-#t_parser.add_argument("-v+", "--verbose", action="store_true", dest="verbose", default=True, help="Print the results of intermediate steps in terminal")
-#t_parser.add_argument("-p", "--parser", dest="parser_type", default="lxml", help="Type of the parser")
+# Create arguments the parser will look for
+t_parser.add_argument('--verbose', '-v', dest = 'print_in_console', action='store_true', help = 'Print the intermediate step in the console (default is false)')
+t_parser.add_argument('input_file_name', metavar='relative_path_name', action='store', help= 'Enter the relative pathname of the file you want to scrap')
+t_parser.add_argument('-out' ,metavar='output_file_name', action='store', default='scrapped_url.tsv',help= 'Name of the tsv file where the scraped hyperlinks will be stored (default is \'scrapped.url\')')
+t_parser.add_argument('-which_parser', metavar='Name of the parser', action='store', default='lxml',help= 'Name of the parser (default is \'lxml\')')
+t_parser.add_argument('-tag_class_hyperlinks', metavar='Class tag for hyperlinks used by site', action='store', default='a class="css-1g7m0tk" href', help='Class of the tag of the hyperlink')
 
-#args = t_parser.parse_args()
+parsed = t_parser.parse_args()
 
-#input_file_name = args.filename
-#which_parser = args.parser_type
-#xprint_in_console = args.verbose
+# Variables
+input_file_name = parsed.input_file_name
+print_in_console = parsed.print_in_console
+output_file_relative_pathname = parsed.out
+which_parser = parsed.which_parser
+tag_class_hyperlinks = parsed.tag_class_hyperlinks
 
 
 # Functions
@@ -35,13 +35,13 @@ def format_string (string):
    string_formatted = re.sub(r"^\s+", "", string_formatted) # Remove leading spaces
    return string_formatted
 
-
-# Ask in prompt the name of the file
-input_file_name = input("Name of the file :")
-print ('\n')
-if input_file_name == '':
-   input_file_name = 'html_simple.html'
-
+def delete_irrelevant_tags_proper_to_nyt (soup):
+   """ Format the whole page to delete some tags that could get in the way of the parser."""
+   soup_formatted = soup.replace('title=""','')
+   # The em tag is used for nyt adds
+   soup_formatted = soup_formatted.replace ('<em class="css-2fg4z9 e1gzwzxm0">' , '')
+   soup_formatted = soup_formatted.replace ('</em>', '')
+   return soup_formatted
 
 # Open a tsv to write the data in it
 output_file = open(output_file_relative_pathname, "w+")
@@ -52,30 +52,28 @@ with open(input_file_name, 'r') as html_file :
     html_file_contents = html_file.read()
     file_soup = BeautifulSoup(html_file_contents, features=which_parser)
     pretty_soup = file_soup.prettify()
-    pretty_soup = pretty_soup.replace('title=""','')
+    pretty_soup = delete_irrelevant_tags_proper_to_nyt(pretty_soup)
     if print_in_console:
-       print (pretty_soup)
+       print ('Here is your web page formatted:\n' + pretty_soup + '\n')
 
 
 # Loop over the html page to find hyperlinked text and associated url
+
+if print_in_console == True:
+   print ('I found the following links :')
 
 while True: 
    # Extract the url
    i_where_link_starts = pretty_soup.find(tag_class_hyperlinks)
    
    if i_where_link_starts == -1:
-      print('No more links')
+      print('\nFound everything, end of process')
       break
 
    i_start_quote = pretty_soup.find('"', i_where_link_starts + len(tag_class_hyperlinks) )
    i_end_quote = pretty_soup.find('"', i_start_quote + 1)
    url = pretty_soup[i_start_quote + 1: i_end_quote]
 
-   if url == None :
-      print('No more links')
-      break
-
-   
    # Extract the hyperlinked text   
    i_start_hyperlinked = pretty_soup.find('>', i_end_quote)
    i_end_hyperlinked = pretty_soup.find('</a>', i_start_hyperlinked + 1)
@@ -87,8 +85,6 @@ while True:
    
    # Delete the part the Scraper already processed
    pretty_soup = pretty_soup[i_end_quote:]
-
-   
 
    # Delete false positives by checking approximately if the url is not part of a script (this is because when embedded in javascript code, double slash will be coded as '/\/\' in the html code source)
    if url.find('\/\/') == -1 :
